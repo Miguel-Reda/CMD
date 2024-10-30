@@ -55,6 +55,9 @@ public class CLI {
             case "cat":
                 displayFileContent(args);
                 break;
+            case "mv":
+                moveFileOrDirectory(args);
+                break;    
             case ">":
                 writeToFile(args, false);
                 break;
