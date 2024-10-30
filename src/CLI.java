@@ -239,6 +239,32 @@ public class CLI {
             System.out.println("Error reading file.");
         }
     }
+    
+    private void moveFileOrDirectory(String[] args) {
+        if (args.length < 3) {
+            System.out.println("Error. Usage: mv [source] [destination]");
+            return;
+        }
+
+        File source = new File(currentDirectory, args[1]);
+        File destination = new File(currentDirectory, args[2]);
+
+        if (source.exists()) {
+            // If destination is a directory, move the source inside it
+            if (destination.isDirectory()) {
+                destination = new File(destination, source.getName());
+            }
+
+            try {
+                Files.move(source.toPath(), destination.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                System.out.println("Moved: " + source.getName() + " to " + destination.getAbsolutePath() + "Successfully!");
+            } catch (IOException e) {
+                System.out.println("Error moving file/directory.");
+            }
+        } else {
+            System.out.println("Source file/directory not found.");
+        }
+    }
 
     private void writeToFile(String[] args, boolean append) {
         if (args.length < 3) {
@@ -266,6 +292,7 @@ public class CLI {
         System.out.println("touch [name] - create file");
         System.out.println("rm [name] - remove file");
         System.out.println("cat [file] - display file content");
+        System.out.println("mv [source] [destination] - move or rename file/directory");
         System.out.println("> [file] [text] - overwrite file with text");
         System.out.println(">> [file] [text] - append text to file");
         System.out.println("exit - exit the CLI");
