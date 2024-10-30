@@ -1,4 +1,5 @@
 // CLITester.java
+import org.example.CLI;
 import org.junit.jupiter.api.*;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
