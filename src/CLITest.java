@@ -132,7 +132,14 @@ public class CLITest {
         cli.executeCommand("cat fileToRead.txt");
         assertTrue(outputStream.toString().contains("Hello CLI"));
     }
-
+    @Test
+    public void testMv() throws IOException {
+    Path sourceFile = Files.createFile(testDir.resolve("sourceFile.txt"));
+    Path destinationDir = Files.createDirectory(testDir.resolve("destinationDir"));
+    cli.executeCommand("mv sourceFile.txt destinationDir");
+    assertFalse(Files.exists(sourceFile));
+    assertTrue(Files.exists(destinationDir.resolve("sourceFile.txt")));
+}
     @Test
     public void testWriteToFileOverwrite() throws IOException {
         cli.executeCommand("> writeFile.txt HelloWorld");
