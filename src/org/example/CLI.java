@@ -5,9 +5,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Scanner;
-import java.util.Arrays;
 import java.util.ArrayList;
 
 public class CLI {
@@ -58,7 +56,7 @@ public class CLI {
                 break;
             case "mv":
                 moveFileOrDirectory(args);
-                break;    
+                break;
             case ">":
                 writeToFile(args, false);
                 break;
@@ -78,30 +76,30 @@ public class CLI {
     }
 
     private void changeDirectory(String path) {
-            File newPath;
-            // Handle Special Cases
-            if (path.equals("..")) {
-                newPath = currentDirectory.getParentFile();
-                if (newPath == null) {
-                    System.out.println("Directory not found.");
-                    return;
-                }
-            } else {
-                newPath = new File(path);
-                if (!newPath.isAbsolute()) {
-                    newPath = new File(currentDirectory, path);
-                }
-            }
-
-            if (newPath.exists() && newPath.isDirectory()) {
-                currentDirectory = newPath;
-
-                return;
-            } else {
+        File newPath;
+        // Handle Special Cases
+        if (path.equals("..")) {
+            newPath = currentDirectory.getParentFile();
+            if (newPath == null) {
                 System.out.println("Directory not found.");
                 return;
             }
+        } else {
+            newPath = new File(path);
+            if (!newPath.isAbsolute()) {
+                newPath = new File(currentDirectory, path);
+            }
         }
+
+        if (newPath.exists() && newPath.isDirectory()) {
+            currentDirectory = newPath;
+
+            return;
+        } else {
+            System.out.println("Directory not found.");
+            return;
+        }
+    }
 
 
     private void listDirectory(String command) {
@@ -243,7 +241,7 @@ public class CLI {
             System.out.println("Error reading file.");
         }
     }
-    
+
     private void moveFileOrDirectory(String[] args) {
         if (args.length < 3) {
             System.out.println("Error. Usage: mv [source] [destination]");
